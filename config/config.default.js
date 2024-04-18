@@ -80,7 +80,7 @@ module.exports = appInfo => {
 
 
   // add your middleware config here
-  config.middleware = ['httpError','verLogin'];
+  config.middleware = ['httpError', 'verLogin'];
   config.httpError = {
     match: '/',
   };
