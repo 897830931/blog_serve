@@ -4,18 +4,17 @@ module.exports = () => {
     try {
       await next();
     } catch (err) {
-      console.log(err);
-      if (err.msg) {
+      if (err.message) {
         ctx.body = {
           code: err.code,
           data: "",
-          msg: err.msg,
+          message: err.message,
         };
       } else {
         ctx.body = {
           code: 500,
           data: "",
-          msg: "服务器内部错误：" + err,
+          message: "服务器内部错误：" + err,
         };
         ctx.status = 500;
       }

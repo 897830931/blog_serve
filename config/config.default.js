@@ -51,7 +51,7 @@ module.exports = appInfo => {
     json: (err, ctx) => {
       ctx.body = {
         code: err.status,
-        msg: err.message,
+        message: err.message,
       };
     },
   };
