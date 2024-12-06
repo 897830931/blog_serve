@@ -19,7 +19,7 @@ class UserController extends Controller {
     }
 
     // 获取用户权限码
-    const roleCodes = await ctx.service.roleCodes.select({ user_id: user.id });
+    const roleCodes = await ctx.service.roleCodes.getUserPermissions({ user_id: user.id });
 
     // 返回用户信息和角色
     ctx.body = {
