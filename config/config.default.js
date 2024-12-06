@@ -12,7 +12,7 @@ module.exports = appInfo => {
    * @type {Egg.EggAppConfig}
    **/
   const config = exports = {};
-  // use for cookie sign key, should change to your own and keep security
+  // 生成token的密钥，用于生成token
   config.keys = appInfo.name + '_asdfghjkldfsdf';
   // 全局常量
   config.CONST = {
@@ -25,7 +25,7 @@ module.exports = appInfo => {
       },
     },
   }
-  //数据库配置
+  //数据库配置 如果链接不上项目无法启动，注释掉就行
   config.mysql = {
     // 单数据库信息配置
     client: {
@@ -79,14 +79,16 @@ module.exports = appInfo => {
   };
 
 
-  // add your middleware config here
-  config.middleware = ['httpError', 'verLogin'];
+  // 中间件
+  config.middleware = ['httpError', 'jwtAuth'];
   config.httpError = {
     match: '/',
   };
-  // 登录配置中间件
-  config.verLogin = {
-    match: '/token',
+   // jwtAuth 中间件的配置，定义哪些路由需要校验 JWT Token
+  config.jwtAuth = {
+    enable: true,
+    match: ["/admin", "/api/private"], // 所有以 "/admin" 或 "/api/private" 开头的接口都需要校验
+    // ignore: ["/admin/auth/login", "/api/public"], // 忽略特定接口，如登录接口、公开接口
   };
   // add your user config here
   const userConfig = {

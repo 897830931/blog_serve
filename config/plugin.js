@@ -14,5 +14,11 @@ module.exports = {
   jsonwebtoken: {
     enable: true,
     package: 'jsonwebtoken',
+  },
+  // 路由权限
+  routerPlus : {
+    enable: true,
+    package: 'egg-router-plus',
   }
+  
 };

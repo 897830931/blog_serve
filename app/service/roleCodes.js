@@ -2,9 +2,9 @@
  * user数据库封装
  */
 "use strict";
-const Service = require("egg").Service;
+const BaseService = require("./baseService");
 
-class roleCodesService extends Service {
+class roleCodesService extends BaseService {
   async select(param) {
     const { app } = this;
     // 根据用户id查询用户权角色权限和用户权限进行并集

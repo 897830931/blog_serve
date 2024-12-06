@@ -1,6 +1,6 @@
 "use strict";
 const Controller = require("egg").Controller;
-const jwt = require("jsonwebtoken");
+
 class UserController extends Controller {
   /**
    * 接口描述：获取用户信息
@@ -10,28 +10,27 @@ class UserController extends Controller {
    */
   async get() {
     const { ctx } = this;
-    //  获取token
-    const token = ctx.request.header.authorization;
-    //  通过token 获取用户信息
-    const data = await ctx.service.user.get({
-      token,
-    });
-    // 获取用户角色
-    const roleCodes = await ctx.service.userRoles.select({
-      user_id: data.id,
-    });
-    if (data) {
-      ctx.body = {
-        code: 1,
-        data: {
-          ...data,
-          roleCodes,
-        },
-        message: "",
-      };
-      return;
+
+    // 中间件已验证 Token 并将用户信息挂载到 ctx.user
+    const user = ctx.user;
+
+    if (!user) {
+      ctx.throw(400, "用户不存在");
     }
-    this.app.throwError(400, "用户不存在");
+
+    // 获取用户权限码
+    const roleCodes = await ctx.service.roleCodes.select({ user_id: user.id });
+
+    // 返回用户信息和角色
+    ctx.body = {
+      code: 1,
+      data: {
+        ...user,
+        roleCodes,
+      },
+      message: "请求成功",
+    };
   }
 }
+
 module.exports = UserController;
