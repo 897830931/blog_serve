@@ -84,11 +84,10 @@ module.exports = appInfo => {
   config.httpError = {
     match: '/',
   };
-   // jwtAuth 中间件的配置，定义哪些路由需要校验 JWT Token
-  config.jwtAuth = {
-    enable: true,
-    match: ["/admin", "/api/private"], // 所有以 "/admin" 或 "/api/private" 开头的接口都需要校验
-    // ignore: ["/admin/auth/login", "/api/public"], // 忽略特定接口，如登录接口、公开接口
+  // jwtAuth 中间件的配置，定义哪些路由需要校验 JWT Token
+  config.jwtAuthOptions = {
+    match: ['/admin', '/api/private'], // 需要校验的路径前缀
+    ignore: ['/admin/auth/login', '/api/public'], // 忽略的路径
   };
   // add your user config here
   const userConfig = {
